@@ -15,7 +15,8 @@ This is not a production ready template. It's just a project to record my progre
 # create electron-forge project
 pnpm dlx create-electron-app . --template=vite-typescript
 
-
+# fix some error for Typescript
+pnpm add -D @electron-forge/shared-types @types/electron-squirrel-startup
 ```
 
 ## License
