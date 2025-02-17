@@ -58,6 +58,31 @@ pnpm add vue @vue/runtime-dom
 ```bash
 pnpm up --latest typescript
 ```
+- config tsconfig.json
+```json
+{
+  "compilerOptions": {
+    "module": "ESNext",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "outDir": "dist",
+    "types": ["vite/client", "electron"],
+    "moduleResolution": "bundler",
+  },
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue", "shims-vue.d.ts"],
+  "exclude": ["node_modules", "dist", "out"]
+}
+```
+- add shims-vue.d.ts
+```ts
+declare module '*.vue' {
+  import { DefineComponent } from 'vue';
+  const component: DefineComponent;
+  export default component;
+}
+```
 - update vite.renderer.config.ts to complie vue
 ```ts
 import { defineConfig } from 'vite'
@@ -98,34 +123,55 @@ import App from './App.vue'
 import './index.css'
 
 const app = createApp(App)
-
 app.use(router)
 app.mount('#app')
 ```
-- tips: if start electron app failed, you may need config a `.npmrc` file. remember to remove add reinstall dependencies.
-```txt
-auto-install-peers=true
-node-linker=hoisted
-```
-- 
+- tips: if start electron app failed, see FAQ below.
 
 1. support tailwindcss
+- install packages
+```bash
+pnpm add -D tailwindcss@3 postcss autoprefixer tailwindcss-animate
+```
+- add `postcss.config.ts`
+```typescript
+export default {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  }
+}
+```
+- add `tailwind.config.ts`
+```typescript
+import animate from 'tailwindcss-animate'
 
-2. support shandcn-vue
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: ['./src/**/*.{ts,tsx,vue}', './index.html'],
+  plugins: [animate],
+}
+```
+- update `src/index.css`
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
 
-3.  support i18n
+1. support shandcn-vue
 
-4.  support unit test
+2.  support unit test
 
-5.  support e2e test
+3.  e2eTest, i18n, and so on, work it by yourself.
 
 ## FAQ
 
 - Can TailwindCSS be upgraded to v4?  
-  Not yet. cause of shandcn-vue relies on TailwindCSS v3. If you want to upgrade TailwindCSS, you can try to use another ui library.
+  Not yet (February 2025). cause of shandcn-vue relies on TailwindCSS v3. If you want to upgrade TailwindCSS, you can try to use another ui library.
 
-- Something related to monorepo  
-  1. You need to config your root .npmrc file to enable auto-install-peers and node-linker.
+- Something tips 
+  1. You may need to config your root .npmrc file to enable auto-install-peers and node-linker.
   ```txt
   auto-install-peers=true
   node-linker=hoisted
