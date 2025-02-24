@@ -128,7 +128,7 @@ app.mount('#app')
 ```
 - tips: if start electron app failed, see FAQ below.
 
-1. support tailwindcss
+5. support tailwindcss
 - install packages
 ```bash
 pnpm add -D tailwindcss@3 postcss autoprefixer tailwindcss-animate
@@ -159,11 +159,38 @@ module.exports = {
 @tailwind utilities;
 ```
 
-1. support shandcn-vue
+6. support shandcn-vue
+- copy `vite.renderer.config.ts` to `vite.config.ts`. Do this to make shadcn-vue cli knows what you are using is vite.
+- run shadcn-vue cli
+```bash
+pnpm dlx shadcn-vue@latest init
+```
+- delete `vite.config.ts`
+- add button
+```bash
+pnpm dlx shadcn-vue@latest add button
+```
+- check shadcn-vue works
+- edit `src/App.vue`
+```vue
+<script setup lang="ts">
+import { Button } from '@/components/ui//button'
+const name = 'Leopen'
+const onButtonClick = () => {
+  console.log('Button clicked!')
+}
+</script>
+<template>
+  <h1 class="text-red-500">💖 Hello World, {{ name }}!</h1>
+  <p>Welcome to your Electron application.</p>
+  <Button @click="onButtonClick">Test shadcn-vue</Button>
+</template>
+```
+- run `pnpm start` and you will see the button. it works!
 
-2.  support unit test
+7. Now you can start building your Electron application with shadcn-vue and TailwindCSS. You can also add something more to suit your needs such as vitest for testing, etc.
 
-3.  e2eTest, i18n, and so on, work it by yourself.
+8. You can see what I'v done in this repo: https://github.com/leopen/digital-nomad/apps/rest-now for more details.
 
 ## FAQ
 
