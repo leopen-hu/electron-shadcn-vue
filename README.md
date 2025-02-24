@@ -190,7 +190,7 @@ const onButtonClick = () => {
 
 7. Now you can start building your Electron application with shadcn-vue and TailwindCSS. You can also add something more to suit your needs such as vitest for testing, etc.
 
-8. You can see what I'v done in this repo: https://github.com/leopen/digital-nomad/apps/rest-now for more details.
+8. You can see what I'v done in this repo: https://github.com/leopen-hu/digital-nomad/tree/main/apps/rest-now for more details.
 
 ## FAQ
 
